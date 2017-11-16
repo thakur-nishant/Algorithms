@@ -7,6 +7,6 @@ def bubble_sort(A):
 
 
 A = [12, 1, 5, 6, 15, 10, 6]
-print(A)
+print("Initial Array:", A)
 bubble_sort(A)
-print(A)
+print("Sorted Array:", A)
