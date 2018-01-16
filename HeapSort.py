@@ -2,7 +2,7 @@ def max_heapify(A, n, i):
     large = i
     l = i * 2 + 1
     r = i * 2 + 2
-    if l < n and A[l] > A[i]:
+    if l < n and A[l] > A[large]:
         large = l
     if r < n and A[r] > A[large]:
         large = r
@@ -14,7 +14,7 @@ def max_heapify(A, n, i):
 
 def build_max_heap(A):
     n = len(A)
-    for i in range(n//2, -1, -1):
+    for i in range(n//2 - 1, -1, -1):
         max_heapify(A, n, i)
     print("Max-heap:", A)
 

@@ -1,46 +1,60 @@
-def find_max_crossing_subarray(A, low, mid, high):
-    left_sum = -999999
-    total_sum = 0
-    max_left = low
-    for i in range(low, mid):
-        total_sum = total_sum + A[i]
-        # print( total_sum, A[i])
-        if total_sum > left_sum:
-            left_sum = total_sum
-            max_left = i
-    right_sum = -999999
-    total_sum = 0
-    max_right = max_left
-    for j in range(mid, high+1):
-        total_sum = total_sum + A[j]
-        # print(total_sum, A[j])
-        if total_sum > right_sum:
-            right_sum = total_sum
-            max_right = j
+import sys
+class Solution:
 
-    return [max_left, max_right, left_sum + right_sum]
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        n = len(nums)
+        low, high, max_sum  = self.findMaxSubArray(nums, 0, n-1)
+        print(low, high, max_sum)
 
+        return max_sum
 
-def find_max_subarray(A, low, high):
-    if high == low:
-        return (low, high, A[low])
-    else:
-        mid = (low + high) // 2
-        left_low, left_high, left_sum = find_max_subarray(A, low, mid)
-        right_low, right_high, right_sum = find_max_subarray(A, mid +1, high)
-        cross_low, cross_high, cross_sum = find_max_crossing_subarray(A, low, mid, high)
-
-        if left_sum >= right_sum and left_sum >= cross_sum:
-            print('left')
-            return [left_low, left_high, left_sum]
-        elif right_sum >= left_sum and right_sum >= cross_sum:
-            print('right')
-            return [right_low, right_high, right_sum]
+    def findMaxSubArray(self, nums, low, high):
+        if low == high:
+            return (low, high, nums[low])
         else:
-            print('cross')
-            return [cross_low, cross_high, cross_sum]
+            mid = (low + high) // 2;
+
+            leftl, lefth, left_sum = self.findMaxSubArray(nums, low, mid)
+            rightl, righth, right_sum = self.findMaxSubArray(nums, mid + 1, high)
+            crossl, crossh, cross_sum = self.findMaxCrossSubArray(nums, low, mid, high)
+
+            if left_sum >= right_sum and left_sum >= cross_sum:
+                return (leftl, lefth, left_sum)
+            if right_sum >= left_sum and right_sum >= cross_sum:
+                return (rightl, righth, right_sum)
+            else:
+                return (crossl, crossh, cross_sum)
 
 
-A = [13,-3,-25,20,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7]
-result = find_max_subarray(A, 0, len(A)-1)
-print(result)
+    def findMaxCrossSubArray(self, nums, low, mid, high):
+        left_sum = -sys.maxsize
+        sum = 0
+        for i in range(mid, -1, -1):
+            sum = sum + nums[i]
+            if sum > left_sum:
+                left_sum = sum
+                max_left = i
+
+        right_sum = -sys.maxsize
+        sum = 0
+        for j in range(mid+1, high+1):
+            sum = sum + nums[j]
+            if sum > right_sum:
+                right_sum = sum
+                max_right = j
+
+        return (max_left, max_right, left_sum + right_sum)
+
+
+
+test = Solution()
+
+nums = [-2,1,-3,4,-1,2,1,-5,4]
+x = test.maxSubArray(nums)
+print(x)
