@@ -26,13 +26,14 @@ class BFS:
                 x = 1
                 # print(current, ":no outgoing city")
 
+        s2d = self.distance[destination]
         path = []
         while destination != source:
             path.insert(0, destination)
             destination = self.parent[destination]
         path.insert(0, source)
 
-        return path
+        return path,s2d
 
 
     def initCities(self, data, source):
@@ -92,6 +93,7 @@ Birmingham Bristol 85
 Birmingham London 117
 """
 
-x = test.findMinDistance(data, 'Luebeck', 'Dresden')
+x,y = test.findMinDistance(data, 'Luebeck', 'Munich')
 
-print("Follow following path for shortest distance:",x)
+print("Follow following path for shortest distance:", x)
+print("Total distance to travel:", y)
