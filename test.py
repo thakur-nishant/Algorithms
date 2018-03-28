@@ -1,23 +1,10 @@
 def solution(A):
-    Sum = []
-    Avg = []
     j = 1
-    newA = []
     while A:
-        x = []
-        for num in range(j):
-            if A:
-                x.append(A.pop(0))
-
-        newA.append(x)
+        x = [A.pop(0) for num in range(j) if A]
+        print("List:",x,"\tSum:",sum(x),"\tAverage:",sum(x)/len(x))
         j += 1
 
-    for i in newA:
-        Sum.append(sum(i))
-        Avg.append(sum(i)/len(i))
-
-    print(Sum)
-    print(Avg)
 
 
 A = [i for i in range(1,18)]
