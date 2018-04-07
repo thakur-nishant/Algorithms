@@ -1,12 +1,29 @@
-def solution(A):
-    j = 1
-    while A:
-        x = [A.pop(0) for num in range(j) if A]
-        print("List:",x,"\tSum:",sum(x),"\tAverage:",sum(x)/len(x))
-        j += 1
+from math import log
+from random import random
+import matplotlib.pyplot as plt
+import numpy as np
 
+l = 2
+T = 24
 
+curr = -1/l * log(random())
+arrival = [curr]
 
-A = [i for i in range(1,18)]
-solution(A)
+while curr < T:
+    curr = curr -1/l * log(random())
+    arrival.append(curr)
 
+arrival = arrival[1:]
+
+t = np.arange(0.0, T, 0.01)
+
+N = len(t)
+X = np.zeros(N)
+
+for i in range(N):
+    X[i] = np.sum(arrival <= t[i])
+
+plt.plot(t, X)
+plt.xlabel('time(hrs)')
+
+plt.show()
