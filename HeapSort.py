@@ -9,7 +9,7 @@ def max_heapify(A, n, i):
     if large != i:
         A[i], A[large] = A[large], A[i]
         max_heapify(A, n, large)
-    # print("Heapifyed:", A)
+    print("Heapifyed:", A)
 
 
 def build_max_heap(A):
